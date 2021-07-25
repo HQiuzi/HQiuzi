@@ -1,0 +1,91 @@
+banner:
+  enable: true
+  src: /js/ui/banner.js
+  border: false
+  cloud:
+    enable: true
+    color: "white"
+  go_down:
+    enable: true
+    icon: icon-arrow-down-s-line
+  title:
+    - HQZ
+    - BLOG
+
+mode: light
+
+notice:
+  enable: false
+  content: Thanks for playing my game.
+
+
+font:
+  cdn:
+    enable: 
+    lib:
+      - https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&display=swap
+  serif:
+    family: "'Songti SC', 'Microsoft YaHei', STZhongsong, STKaiti, KaiTi, Roboto, serif"
+    weight: 900
+  sans_serif:
+    family: "'PingFang SC', 'Microsoft YaHei', Roboto, Arial, sans-serif"
+    weight: 400
+  monospace:
+    family: "'Source Code Pro', 'Courier New', Courier, Consolas, Monaco, monospace"
+
+trianglify:
+  enable: true
+  cellSize: 100
+  width: 800
+  height: 600
+  palette: '["Purples", "Blues"]'
+  opacity: 0.4
+
+avatar:
+  enable: true
+  url: /images/avatar.jpg
+  rounded: true
+  opacity: 1
+  mickey_mouse: false
+  status:
+    enable: true
+    emoji: 😭
+    message: 不想上学
+
+bg_image:
+  enable: true
+  dark: /images/darkbg.jpg
+  # blur: 30px # 设置背景模糊程度
+  opacity: 0.8
+
+sidebar:
+  bg_image: 
+  tagcloud:
+    enable: false
+    amount: 20
+  
+social:
+  - name: GitHub
+    link: https://github.com/HQiuzi
+    icon: icon-github-line
+    color: "#6e5494"
+
+  - name: E-Mail
+    link: hqz_1013@163.com
+    icon: icon-mail-line
+    color: "#8E71C1"
+
+
+pages:
+
+
+
+codeblock:
+  copy_btn: true
+  prismjs:
+    light: default
+    dark: tomorrow
+
+
+custom:
+  style: source/_data/style/*
