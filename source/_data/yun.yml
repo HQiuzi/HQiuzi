@@ -18,20 +18,41 @@ notice:
   enable: false
   content: Thanks for playing my game.
 
+menu:
+  home:
+    path: /
+    icon: icon-home-4-line
+  list:
+    - type: archives
+      path: /archives/
+      icon: icon-archive-line
+    - type: categories
+      path: /categories/
+      icon: icon-folder-2-line
+    - type: tags
+      path: /tags/
+      icon: icon-price-tag-3-line
+    # - path: https://www.yunyoujun.cn
+    #   icon: icon-cloud-line
+    #   count: 你猜
+  custom:
+    title: 相册
+    path: /albums/
+    icon: icon-gallery-line
 
-font:
-  cdn:
-    enable: 
-    lib:
-      - https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&display=swap
-  serif:
-    family: "'Songti SC', 'Microsoft YaHei', STZhongsong, STKaiti, KaiTi, Roboto, serif"
-    weight: 900
-  sans_serif:
-    family: "'PingFang SC', 'Microsoft YaHei', Roboto, Arial, sans-serif"
-    weight: 400
-  monospace:
-    family: "'Source Code Pro', 'Courier New', Courier, Consolas, Monaco, monospace"
+# font:
+#   cdn:
+#     enable: 
+#     lib:
+#       - https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&display=swap
+#   serif:
+#     family: "'Songti SC', 'Microsoft YaHei', STZhongsong, STKaiti, KaiTi, Roboto, serif"
+#     weight: 900
+#   sans_serif:
+#     family: "'PingFang SC', 'Microsoft YaHei', Roboto, Arial, sans-serif"
+#     weight: 400
+#   monospace:
+#     family: "'Source Code Pro', 'Courier New', Courier, Consolas, Monaco, monospace"
 
 trianglify:
   enable: true
@@ -39,11 +60,11 @@ trianglify:
   width: 800
   height: 600
   palette: '["Purples", "Blues"]'
-  opacity: 0.4
+  opacity: 0.7
 
 avatar:
   enable: true
-  url: /images/avatar.jpg
+  url: https://z3.ax1x.com/2021/07/26/Wf95DA.jpg
   rounded: true
   opacity: 1
   mickey_mouse: false
@@ -54,9 +75,11 @@ avatar:
 
 bg_image:
   enable: true
-  dark: /images/darkbg.jpg
   # blur: 30px # 设置背景模糊程度
   opacity: 0.8
+
+post_card:
+  opacity: 0.9
 
 sidebar:
   bg_image: 
@@ -79,6 +102,8 @@ social:
 pages:
 
 
+say:
+  enable: false
 
 codeblock:
   copy_btn: true
@@ -87,5 +112,15 @@ codeblock:
     dark: tomorrow
 
 
+
+reward:
+  enable: false
+
 custom:
   style: source/_data/style/*
+
+albums:
+  enable: true
+
+wordcloud:
+  enable: true

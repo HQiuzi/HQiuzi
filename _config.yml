@@ -2,18 +2,26 @@
 ## Docs: https://hexo.io/docs/configuration.html
 ## Source: https://github.com/hexojs/hexo/
 
+aplayer:
+  cdn: https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js
+  style_cdn: https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css
+  meting: true
+  meting_cdn: https://cdn.jsdelivr.net/npm/meting@1/dist/Meting.min.js
+  asset_inject: false
+
+
 # Site
-title: Hexo
+title: HQZ's Blog
 subtitle: ''
 description: ''
 keywords:
-author: John Doe
-language: en
+author: HQiuzi
+language: zh-CN
 timezone: ''
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://example.com
+url: http://HQiuzi.github.io
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -50,8 +58,13 @@ highlight:
 prismjs:
   enable: true
   preprocess: true
-  line_number: false
+  line_number: true
   tab_replace: ""
+
+
+
+
+
 
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
@@ -95,6 +108,8 @@ ignore:
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 theme: yun
+
+
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
