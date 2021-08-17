@@ -123,4 +123,4 @@ albums:
   enable: true
 
 wordcloud:
-  enable: true
+  enable: false
