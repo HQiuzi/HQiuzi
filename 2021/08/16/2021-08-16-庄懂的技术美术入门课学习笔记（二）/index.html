@@ -1,0 +1,195 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="HQiuzi"><meta name="copyright" content="HQiuzi"><meta name="generator" content="Hexo 5.4.0"><meta name="theme" content="hexo-theme-yun"><title>2021-08-16-庄懂的技术美术入门课学习笔记（二） | HQZ's Blog</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/star-markdown-css@0.1.25/dist/yun/yun-markdown.min.css"><script src="//at.alicdn.com/t/font_1140697_dxory92pb0h.js" async></script><script src="https://cdn.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>document.addEventListener("DOMContentLoaded", () => {
+  [".post-card",".post-content img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+});
+</script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script defer src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/contrib/copy-tex.min.css"><script defer src="https://cdn.jsdelivr.net/npm/katex@latest/dist/contrib/copy-tex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@latest/dist/contrib/auto-render.min.js"></script><script>document.addEventListener("DOMContentLoaded", () => {
+  Yun.utils.renderKatex();
+});</script><link id="light-prism-css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@latest/themes/prism.css" media="(prefers-color-scheme: light)"><link id="dark-prism-css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@latest/themes/prism-tomorrow.css" media="(prefers-color-scheme: dark)"><link rel="icon" href="/yun.svg"><link rel="mask-icon" href="/yun.svg" color="#0078E7"><link rel="alternate icon" href="/yun.ico"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="preload" href="/js/utils.js" as="script"><link rel="preload" href="/js/hexo-theme-yun.js" as="script"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><script id="yun-config">
+    const Yun = window.Yun || {};
+    window.CONFIG = {"hostname":"hqiuzi.github.io","root":"/","title":["HQZ","BLOG"],"version":"1.6.1","mode":"light","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）"},"anonymous_image":"https://cdn.jsdelivr.net/gh/YunYouJun/cdn/img/avatar/none.jpg","fireworks":{"colors":["102, 167, 221","62, 131, 225","33, 78, 194"]}};
+  </script><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script src="/js/utils.js"></script><script src="/js/hexo-theme-yun.js"></script><meta name="description" content="对应课程4~6课内容  常用向量 反射漫反射Diffuse 镜面反射Specular Phong 公式：r dot v（反射方向点乘观察方向）  ShaderForge实现 先对l取反方向，然后求以N为对称的向量得到反射方向，然后再和观察方向点乘。记得要把负值变成0。 1.5 这一步等效于ViewReflect点乘光照方向$rDir&#x3D;Reflect(-lDir,nDir)$  用power结点得">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2021-08-16-庄懂的技术美术入门课学习笔记（二）">
+<meta property="og:url" content="http://hqiuzi.github.io/2021/08/16/2021-08-16-%E5%BA%84%E6%87%82%E7%9A%84%E6%8A%80%E6%9C%AF%E7%BE%8E%E6%9C%AF%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
+<meta property="og:site_name" content="HQZ&#39;s Blog">
+<meta property="og:description" content="对应课程4~6课内容  常用向量 反射漫反射Diffuse 镜面反射Specular Phong 公式：r dot v（反射方向点乘观察方向）  ShaderForge实现 先对l取反方向，然后求以N为对称的向量得到反射方向，然后再和观察方向点乘。记得要把负值变成0。 1.5 这一步等效于ViewReflect点乘光照方向$rDir&#x3D;Reflect(-lDir,nDir)$  用power结点得">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/HQiuzi/HQiuzi.github.io/raw/hexo/images/2021-08-16-%E5%BA%84%E6%87%82%E7%9A%84%E6%8A%80%E6%9C%AF%E7%BE%8E%E6%9C%AF%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/image-20210816222259466.png">
+<meta property="og:image" content="https://github.com/HQiuzi/HQiuzi.github.io/raw/hexo/images/2021-08-16-%E5%BA%84%E6%87%82%E7%9A%84%E6%8A%80%E6%9C%AF%E7%BE%8E%E6%9C%AF%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/image-20210816222732514.png">
+<meta property="og:image" content="https://github.com/HQiuzi/HQiuzi.github.io/raw/hexo/images/2021-08-16-%E5%BA%84%E6%87%82%E7%9A%84%E6%8A%80%E6%9C%AF%E7%BE%8E%E6%9C%AF%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/image-20210816222904721.png">
+<meta property="og:image" content="https://github.com/HQiuzi/HQiuzi.github.io/raw/hexo/images/2021-08-16-%E5%BA%84%E6%87%82%E7%9A%84%E6%8A%80%E6%9C%AF%E7%BE%8E%E6%9C%AF%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/image-20210816234350760.png">
+<meta property="og:image" content="https://github.com/HQiuzi/HQiuzi.github.io/raw/hexo/images/2021-08-16-%E5%BA%84%E6%87%82%E7%9A%84%E6%8A%80%E6%9C%AF%E7%BE%8E%E6%9C%AF%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/image-20210816233430097.png">
+<meta property="og:image" content="https://github.com/HQiuzi/HQiuzi.github.io/raw/hexo/images/2021-08-16-%E5%BA%84%E6%87%82%E7%9A%84%E6%8A%80%E6%9C%AF%E7%BE%8E%E6%9C%AF%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/image-20210817154859550.png">
+<meta property="og:image" content="https://github.com/HQiuzi/HQiuzi.github.io/raw/hexo/images/2021-08-16-%E5%BA%84%E6%87%82%E7%9A%84%E6%8A%80%E6%9C%AF%E7%BE%8E%E6%9C%AF%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/image-20210817155011644.png">
+<meta property="og:image" content="https://github.com/HQiuzi/HQiuzi.github.io/raw/hexo/images/2021-08-16-%E5%BA%84%E6%87%82%E7%9A%84%E6%8A%80%E6%9C%AF%E7%BE%8E%E6%9C%AF%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/image-20210817155050682.png">
+<meta property="og:image" content="https://github.com/HQiuzi/HQiuzi.github.io/raw/hexo/images/2021-08-16-%E5%BA%84%E6%87%82%E7%9A%84%E6%8A%80%E6%9C%AF%E7%BE%8E%E6%9C%AF%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/image-20210817160509757.png">
+<meta property="og:image" content="https://github.com/HQiuzi/HQiuzi.github.io/raw/hexo/images/2021-08-16-%E5%BA%84%E6%87%82%E7%9A%84%E6%8A%80%E6%9C%AF%E7%BE%8E%E6%9C%AF%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/image-20210817161630691.png">
+<meta property="og:image" content="https://github.com/HQiuzi/HQiuzi.github.io/raw/hexo/images/2021-08-16-%E5%BA%84%E6%87%82%E7%9A%84%E6%8A%80%E6%9C%AF%E7%BE%8E%E6%9C%AF%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/image-20210817161932407.png">
+<meta property="og:image" content="d:/Blog/blog/images/2021-08-16-庄懂的技术美术入门课学习笔记（二）/image-20210822154247033.png">
+<meta property="og:image" content="d:/Blog/blog/images/2021-08-16-庄懂的技术美术入门课学习笔记（二）/image-20210822154428928.png">
+<meta property="article:published_time" content="2021-08-16T14:14:03.000Z">
+<meta property="article:modified_time" content="2021-08-22T07:44:33.634Z">
+<meta property="article:author" content="HQiuzi">
+<meta property="article:tag" content="反射">
+<meta property="article:tag" content="Phong">
+<meta property="article:tag" content="Blinn-Phong">
+<meta property="article:tag" content="BRDF">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/HQiuzi/HQiuzi.github.io/raw/hexo/images/2021-08-16-%E5%BA%84%E6%87%82%E7%9A%84%E6%8A%80%E6%9C%AF%E7%BE%8E%E6%9C%AF%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/image-20210816222259466.png"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head><body><script defer src="https://cdn.jsdelivr.net/npm/animejs@latest"></script><script defer src="/js/ui/fireworks.js"></script><canvas class="fireworks"></canvas><canvas id="trianglifyContainer"></canvas><script defer src="https://cdn.jsdelivr.net/npm/trianglify@4/dist/trianglify.bundle.js"></script><script>document.addEventListener("DOMContentLoaded", () => {
+  const pattern = trianglify({
+    width: 800,
+    height: 600,
+    cellSize: 75,
+    palette: ["Blues"],
+  });
+  const canvasOpts = {
+    applyCssScaling: false
+  }
+  document.body.appendChild(pattern.toCanvas(trianglifyContainer, canvasOpts));
+});</script><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-list-ordered"></use></svg></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-passport-line"></use></svg></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="HQiuzi"><img width="96" loading="lazy" src="https://z3.ax1x.com/2021/08/29/hGY55T.jpg" alt="HQiuzi"><span class="site-author-status" title="不想上学">😭</span></a><div class="site-author-name"><a href="/about/">HQiuzi</a></div><span class="site-name">HQZ's Blog</span><sub class="site-subtitle"></sub><div class="site-desciption"></div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="首页"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-home-4-line"></use></svg></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-archive-line"></use></svg></span><span class="site-state-item-count">15</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-2-line"></use></svg></span><span class="site-state-item-count">5</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="site-state-item-count">42</span></a></div><a class="site-state-item hty-icon-button" href="/albums/" title="相册"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-gallery-line"></use></svg></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/HQiuzi" title="GitHub" target="_blank" style="color:#6e5494"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-github-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="hqz_1013@163.com" title="E-Mail" target="_blank" style="color:#8E71C1"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-mail-line"></use></svg></a></div></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%90%91%E9%87%8F"><span class="toc-number">1.</span> <span class="toc-text">常用向量</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%8D%E5%B0%84"><span class="toc-number">2.</span> <span class="toc-text">反射</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BC%AB%E5%8F%8D%E5%B0%84Diffuse"><span class="toc-number">2.1.</span> <span class="toc-text">漫反射Diffuse</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%95%9C%E9%9D%A2%E5%8F%8D%E5%B0%84Specular"><span class="toc-number">2.2.</span> <span class="toc-text">镜面反射Specular</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Phong"><span class="toc-number">2.2.1.</span> <span class="toc-text">Phong</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ShaderForge%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.2.1.1.</span> <span class="toc-text">ShaderForge实现</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Blinn-Phong"><span class="toc-number">2.2.2.</span> <span class="toc-text">Blinn-Phong</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ShaderForge%E5%AE%9E%E7%8E%B0-1"><span class="toc-number">2.2.2.1.</span> <span class="toc-text">ShaderForge实现</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BA%94%E7%94%A8"><span class="toc-number">3.</span> <span class="toc-text">应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Lambert-Blinn-Phong-Phong"><span class="toc-number">3.0.1.</span> <span class="toc-text">Lambert+Blinn-Phong&#x2F;Phong</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E8%B4%B4%E5%9B%BE%E6%9D%A5%E7%BB%99%E7%89%A9%E4%BD%93%E4%B8%8D%E5%90%8C%E9%83%A8%E5%88%86%E4%B8%8D%E5%90%8C%E5%85%89%E6%BB%91%E5%BA%A6"><span class="toc-number">3.0.2.</span> <span class="toc-text">使用贴图来给物体不同部分不同光滑度</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%83%85%E6%8A%A5"><span class="toc-number">4.</span> <span class="toc-text">情报</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#BRDF%E5%8F%8C%E5%90%91%E5%8F%8D%E5%B0%84%E5%88%86%E5%B8%83%E5%87%BD%E6%95%B0"><span class="toc-number">4.1.</span> <span class="toc-text">BRDF双向反射分布函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E6%BA%90Shader"><span class="toc-number">4.2.</span> <span class="toc-text">开源Shader</span></a></li></ol></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article"><link itemprop="mainEntityOfPage" href="http://HQiuzi.github.io/2021/08/16/2021-08-16-%E5%BA%84%E6%87%82%E7%9A%84%E6%8A%80%E6%9C%AF%E7%BE%8E%E6%9C%AF%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="HQiuzi"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="HQZ's Blog"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">2021-08-16-庄懂的技术美术入门课学习笔记（二）</h1><div class="post-meta"><div class="post-time" style="display:inline-block"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-line"></use></svg></span> <time title="创建时间：2021-08-16 22:14:03" itemprop="dateCreated datePublished" datetime="2021-08-16T22:14:03+08:00">2021-08-16</time><span class="post-meta-divider">-</span><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-2-line"></use></svg></span> <time title="修改时间：2021-08-22 15:44:33" itemprop="dateModified" datetime="2021-08-22T15:44:33+08:00">2021-08-22</time></div><div class="post-classify"><span class="post-category"> <span class="post-meta-item-icon" style="margin-right:3px;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-line"></use></svg></span><span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category-item" href="/categories/%E5%BA%84%E6%87%82%E7%9A%84%E6%8A%80%E6%9C%AF%E7%BE%8E%E6%9C%AF%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">庄懂的技术美术入门课学习笔记</span></a></span></span><span class="post-tag"><span class="post-meta-divider">-</span><a class="tag-item" href="/tags/%E5%8F%8D%E5%B0%84/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">反射</span></a><a class="tag-item" href="/tags/Phong/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">Phong</span></a><a class="tag-item" href="/tags/Blinn-Phong/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">Blinn-Phong</span></a><a class="tag-item" href="/tags/BRDF/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">BRDF</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body" style="--smc-primary:#0078E7;"><blockquote>
+<p>对应课程4~6课内容</p>
+</blockquote>
+<h1 id="常用向量"><a href="#常用向量" class="headerlink" title="常用向量"></a>常用向量</h1><p><img src="https://github.com/HQiuzi/HQiuzi.github.io/raw/hexo/images/2021-08-16-%E5%BA%84%E6%87%82%E7%9A%84%E6%8A%80%E6%9C%AF%E7%BE%8E%E6%9C%AF%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/image-20210816222259466.png" alt="image-20210816222259466" loading="lazy"></p>
+<h1 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h1><h2 id="漫反射Diffuse"><a href="#漫反射Diffuse" class="headerlink" title="漫反射Diffuse"></a>漫反射Diffuse</h2><p><img src="https://github.com/HQiuzi/HQiuzi.github.io/raw/hexo/images/2021-08-16-%E5%BA%84%E6%87%82%E7%9A%84%E6%8A%80%E6%9C%AF%E7%BE%8E%E6%9C%AF%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/image-20210816222732514.png" alt="image-20210816222732514" loading="lazy"></p>
+<h2 id="镜面反射Specular"><a href="#镜面反射Specular" class="headerlink" title="镜面反射Specular"></a>镜面反射Specular</h2><p><img src="https://github.com/HQiuzi/HQiuzi.github.io/raw/hexo/images/2021-08-16-%E5%BA%84%E6%87%82%E7%9A%84%E6%8A%80%E6%9C%AF%E7%BE%8E%E6%9C%AF%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/image-20210816222904721.png" alt="image-20210816222904721" loading="lazy"></p>
+<h3 id="Phong"><a href="#Phong" class="headerlink" title="Phong"></a>Phong</h3><blockquote>
+<p>公式：r dot v（反射方向点乘观察方向）</p>
+</blockquote>
+<h4 id="ShaderForge实现"><a href="#ShaderForge实现" class="headerlink" title="ShaderForge实现"></a>ShaderForge实现</h4><ol>
+<li><p>先对l取反方向，然后求以N为对称的向量得到反射方向，然后再和观察方向点乘。记得要把负值变成0。</p>
+<p>1.5 这一步等效于ViewReflect点乘光照方向$rDir=Reflect(-lDir,nDir)$</p>
+</li>
+<li><p>用power结点得到高光。</p>
+</li>
+</ol>
+<blockquote>
+<p>tips: 两个rgb相乘就相当于正片叠底，power的指数相当于正片叠底的层数。power一般叫高光次幂。</p>
+<p>注意前面lDir要乘-1！</p>
+</blockquote>
+<p><img src="https://github.com/HQiuzi/HQiuzi.github.io/raw/hexo/images/2021-08-16-%E5%BA%84%E6%87%82%E7%9A%84%E6%8A%80%E6%9C%AF%E7%BE%8E%E6%9C%AF%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/image-20210816234350760.png" alt="image-20210816234350760" loading="lazy"></p>
+<h3 id="Blinn-Phong"><a href="#Blinn-Phong" class="headerlink" title="Blinn-Phong"></a>Blinn-Phong</h3><blockquote>
+<p>Blinn-Phong的计算消耗少一些，但效果没有Phong真实，二者的高光范围有差别。</p>
+<p>公式：n dot h （法线方向点乘半角方向）</p>
+<p>半角：视角方向和观察方向的中间角</p>
+</blockquote>
+<h4 id="ShaderForge实现-1"><a href="#ShaderForge实现-1" class="headerlink" title="ShaderForge实现"></a>ShaderForge实现</h4><p>n和h点乘后和0取max，然后再用power结点得到高光。</p>
+<p><img src="https://github.com/HQiuzi/HQiuzi.github.io/raw/hexo/images/2021-08-16-%E5%BA%84%E6%87%82%E7%9A%84%E6%8A%80%E6%9C%AF%E7%BE%8E%E6%9C%AF%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/image-20210816233430097.png" alt="image-20210816233430097" loading="lazy"></p>
+<h1 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h1><p>用Phong获得高光部分，然后和漫反射的结果add一下，得到一种常用的光照模型。</p>
+<p>代码如下：</p>
+<h3 id="Lambert-Blinn-Phong-Phong"><a href="#Lambert-Blinn-Phong-Phong" class="headerlink" title="Lambert+Blinn-Phong/Phong"></a>Lambert+Blinn-Phong/Phong</h3><blockquote>
+<p>获得世界空间坐标：</p>
+<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">o.posWS &#x3D; mul(unity_ObjectToWorld,v.vertex);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>求观察向量：</p>
+<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">float3 vDir &#x3D; normalize(_WorldSpaceCameraPos.xyz-i.posWS)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>求两个向量a、b的中间角：<br>$$ normalize(\vec{a}+\vec{b}) $$</p>
+</blockquote>
+<details>
+    <summary>OldSchoolShader.shader(相当于Lambert+Blinn-Phong)</summary>
+
+
+
+<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">Shader &quot;Class2&#x2F;OldSchoolShader&quot; &#123;
+    Properties &#123;
+		_MainCol(&quot;颜色&quot;,color)&#x3D;(1.0,1.0,1.0,1.0)
+		_SpecularPow(&quot;高光次幂&quot;,range(1,90))&#x3D;30
+    &#125;
+    SubShader &#123;
+        Tags &#123;
+            &quot;RenderType&quot;&#x3D;&quot;Opaque&quot;
+        &#125;
+        LOD 100
+        Pass &#123;
+            Name &quot;FORWARD&quot;
+            Tags &#123;
+                &quot;LightMode&quot;&#x3D;&quot;ForwardBase&quot;
+            &#125;
+            
+            
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #include &quot;UnityCG.cginc&quot;
+            #pragma multi_compile_fwdbase_fullshadows
+            #pragma multi_compile_fog
+            #pragma target 3.0
+
+			uniform float3 _MainCol;
+			uniform float _SpecularPow;
+            struct VertexInput &#123;
+                float4 vertex : POSITION;
+				float3 normal : NORMAL;&#x2F;&#x2F;获取法线信息
+            &#125;;
+            struct VertexOutput &#123;
+                float4 posCS : SV_POSITION;
+				float3 posWS : TEXCOORD0;
+				float3 nDirWS : TEXCOORD1;
+				
+            &#125;;
+            VertexOutput vert (VertexInput v) &#123;
+                VertexOutput o &#x3D; (VertexOutput)0;
+                o.posCS &#x3D; UnityObjectToClipPos( v.vertex );&#x2F;&#x2F;转换到裁剪空间
+				o.posWS &#x3D; mul(unity_ObjectToWorld,v.vertex);&#x2F;&#x2F;世界空间
+				o.nDirWS &#x3D; UnityObjectToWorldNormal(v.normal);&#x2F;&#x2F;由模型法线信息换算的世界空间法线信息
+
+                return o;
+            &#125;
+            float4 frag(VertexOutput i) : COLOR &#123;
+&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F; Lighting:
+&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F; Emissive:
+				&#x2F;&#x2F;准备向量 
+				float3 nDir &#x3D; i.nDirWS;
+				float3 lDir &#x3D; normalize(_WorldSpaceLightPos0.xyz);&#x2F;&#x2F;Pos0是平行光，xyz代表方向坐标，这里最好做一下正则化
+				float3 vDir &#x3D; normalize(_WorldSpaceCameraPos.xyz-i.posWS);
+				float3 hDir &#x3D; normalize(vDir+lDir);
+				float3 rDir &#x3D; reflect(-lDir,nDir);
+
+				&#x2F;&#x2F;中间值
+				
+				float nDotl &#x3D; dot(nDir, lDir );&#x2F;&#x2F;点乘
+				float nDoth &#x3D; dot(nDir,hDir);&#x2F;&#x2F;Blinn-Phong
+				float rDotv&#x3D; dot(rDir,vDir);&#x2F;&#x2F;Phong
+
+				&#x2F;&#x2F;光照模型
+				float lambert &#x3D; max(0.0, nDotl);&#x2F;&#x2F;把负数部分取0
+				float blinnPhong &#x3D; pow(max(0.0,nDoth),_SpecularPow);
+				float phong &#x3D; pow(max(0.0,rDotv),_SpecularPow);
+				float3 finalBP &#x3D; _MainCol * lambert + blinnPhong;
+				float3 finalP &#x3D; _MainCol * lambert + phong;
+
+                return float4(finalBP,1.0);&#x2F;&#x2F;注意代码规范，转化为float4 rgba
+            &#125;
+            ENDCG
+        &#125;
+    &#125;
+    FallBack &quot;Diffuse&quot;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+</details>
+
+
+<h3 id="使用贴图来给物体不同部分不同光滑度"><a href="#使用贴图来给物体不同部分不同光滑度" class="headerlink" title="使用贴图来给物体不同部分不同光滑度"></a>使用贴图来给物体不同部分不同光滑度</h3><p>如果想使物体的不同部分看起来有不同的光滑度/粗糙度，可以用一个贴图来作为Lerp的蒙版，然后设置两种SpecularPower</p>
+<p><img src="https://github.com/HQiuzi/HQiuzi.github.io/raw/hexo/images/2021-08-16-%E5%BA%84%E6%87%82%E7%9A%84%E6%8A%80%E6%9C%AF%E7%BE%8E%E6%9C%AF%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/image-20210817154859550.png" alt="image-20210817154859550" loading="lazy"></p>
+<p>为了增强这种效果，可以对高光Power后再和贴图的一个通道做一次乘法，即可产生不均匀的高光。</p>
+<p><img src="https://github.com/HQiuzi/HQiuzi.github.io/raw/hexo/images/2021-08-16-%E5%BA%84%E6%87%82%E7%9A%84%E6%8A%80%E6%9C%AF%E7%BE%8E%E6%9C%AF%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/image-20210817155011644.png" alt="image-20210817155011644" loading="lazy"></p>
+<p><strong>样例1：每颗葡萄的高光范围不同</strong></p>
+<p><img src="https://github.com/HQiuzi/HQiuzi.github.io/raw/hexo/images/2021-08-16-%E5%BA%84%E6%87%82%E7%9A%84%E6%8A%80%E6%9C%AF%E7%BE%8E%E6%9C%AF%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/image-20210817155050682.png" alt="image-20210817155050682" loading="lazy"></p>
+<p><strong>样例2：铁上有脱落的漆皮（漆皮的光滑程度更高）</strong></p>
+<p>同样直接用step处理后的贴图对两种specularPower做插值得到高光，然后用同样的贴图对两种颜色做插值，和漫反射结果相乘后加上高光即可。</p>
+<p><img src="https://github.com/HQiuzi/HQiuzi.github.io/raw/hexo/images/2021-08-16-%E5%BA%84%E6%87%82%E7%9A%84%E6%8A%80%E6%9C%AF%E7%BE%8E%E6%9C%AF%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/image-20210817160509757.png" alt="image-20210817160509757" loading="lazy"></p>
+<h1 id="情报"><a href="#情报" class="headerlink" title="情报"></a>情报</h1><h2 id="BRDF双向反射分布函数"><a href="#BRDF双向反射分布函数" class="headerlink" title="BRDF双向反射分布函数"></a>BRDF双向反射分布函数</h2><blockquote>
+<p>通俗理解：</p>
+<p>想象你有一个不透明的桌面，一个激光发射器。你先让激光向下垂直地射在那个桌面上，这样你就可以在桌面上看到一个亮点，接着你从各个不同的方向来观察那个亮点，你会发现亮点的亮度随着观察方向的不同而发生了改变。然后你站着不动，改变激光发射方向和桌面的夹角，你又会发现亮点的亮度发生了改变。这就是说，一个表面对不同的光线入射角和反射角的组合，拥有不同的反射率。BRDF就是用来对这种反射性质进行定义的。</p>
+</blockquote>
+<p><img src="https://github.com/HQiuzi/HQiuzi.github.io/raw/hexo/images/2021-08-16-%E5%BA%84%E6%87%82%E7%9A%84%E6%8A%80%E6%9C%AF%E7%BE%8E%E6%9C%AF%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/image-20210817161630691.png" alt="image-20210817161630691" loading="lazy"></p>
+<p>其他的BRDF效果：可用BRDF Explorer查看其他模型</p>
+<p><img src="https://github.com/HQiuzi/HQiuzi.github.io/raw/hexo/images/2021-08-16-%E5%BA%84%E6%87%82%E7%9A%84%E6%8A%80%E6%9C%AF%E7%BE%8E%E6%9C%AF%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/image-20210817161932407.png" alt="image-20210817161932407" loading="lazy"></p>
+<h2 id="开源Shader"><a href="#开源Shader" class="headerlink" title="开源Shader"></a>开源Shader</h2><p><img src="D:\Blog\blog\images\2021-08-16-庄懂的技术美术入门课学习笔记（二）\image-20210822154247033.png" alt="image-20210822154247033" loading="lazy"></p>
+<p><img src="D:\Blog\blog\images\2021-08-16-庄懂的技术美术入门课学习笔记（二）\image-20210822154428928.png" alt="image-20210822154428928" loading="lazy"></p>
+</div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>HQiuzi</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="http://hqiuzi.github.io/2021/08/16/2021-08-16-%E5%BA%84%E6%87%82%E7%9A%84%E6%8A%80%E6%9C%AF%E7%BE%8E%E6%9C%AF%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/" title="2021-08-16-庄懂的技术美术入门课学习笔记（二）">http://hqiuzi.github.io/2021/08/16/2021-08-16-%E5%BA%84%E6%87%82%E7%9A%84%E6%8A%80%E6%9C%AF%E7%BE%8E%E6%9C%AF%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><svg class="icon"><use xlink:href="#icon-creative-commons-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-by-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-nc-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-sa-line"></use></svg></a> 许可协议。</li></ul></section></article><div class="post-nav"><div class="post-nav-item"><a class="post-nav-prev" href="/2021/08/17/2021-08-17-%E5%BA%84%E6%87%82%E7%9A%84%E6%8A%80%E6%9C%AF%E7%BE%8E%E6%9C%AF%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/" rel="prev" title="2021-08-17-庄懂的技术美术入门课学习笔记（三）"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-left-s-line"></use></svg><span class="post-nav-text">2021-08-17-庄懂的技术美术入门课学习笔记（三）</span></a></div><div class="post-nav-item"><a class="post-nav-next" href="/2021/08/15/2021-08-15-%E5%BA%84%E6%87%82%E7%9A%84%E6%8A%80%E6%9C%AF%E7%BE%8E%E6%9C%AF%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/" rel="next" title="2021-08-15-庄懂的技术美术入门课学习笔记（一）"><span class="post-nav-text">2021-08-15-庄懂的技术美术入门课学习笔记（一）</span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-right-s-line"></use></svg></a></div></div></div><div class="hty-card" id="comment"><div class="comment-tooltip text-center"><span>要不要和我说些什么？</span><br></div></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2020 – 2021 </span><span class="with-love" id="animate"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cloud-line"></use></svg></span><span class="author"> HQiuzi</span></div><div class="powered"><span>由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v5.4.0</span><span class="footer-separator">|</span><span>主题 - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v1.6.1</span></div></footer><a class="hty-icon-button" id="back-to-top" aria-label="back-to-top" href="#"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-up-s-line"></use></svg><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a></div></body></html>
