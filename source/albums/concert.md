@@ -1,32 +1,32 @@
 ---
-title: 演唱会
+title: 个人作品
 date: 2021-07-26 15:59:23
 updated: 2021-07-26 15:59:23
 layout: gallery
 photos:
-  - caption: 宣传片
-    src: https://z3.ax1x.com/2021/07/26/Wf9qC8.jpg
-    desc: 真的很好看
-  - caption: 全景
-    src: https://z3.ax1x.com/2021/07/26/WfeC5j.jpg
-    desc: 真的很好看
-  - caption: phenomenon-1
-    src: https://z3.ax1x.com/2021/07/26/WfeFGn.jpg
-    desc: 真的很好看
-  - caption: phenomenon-2
-    src: https://z3.ax1x.com/2021/07/26/WfeZrT.jpg
-    desc: 真的很好看
-  - caption: 重生-1
-    src: https://z3.ax1x.com/2021/07/26/WfZzqS.jpg
-    desc: 真的很好看
-  - caption: 重生-2
-    src: https://z3.ax1x.com/2021/07/26/Wfe9aQ.jpg
-    desc: 真的很好看
-  - caption: 接纸条
-    src: https://z3.ax1x.com/2021/07/26/WfZxr8.jpg
-    desc: 真的很好看
-  - caption: girlfriend
-    src: https://z3.ax1x.com/2021/07/26/WfeeqU.jpg
-    desc: 真的很好看
+  - caption: 天使
+    src: https://z3.ax1x.com/2021/08/15/fgj740.png
+    desc: 2021-8
+  - caption: 迷
+    src: https://z3.ax1x.com/2021/08/29/hG1zef.png
+    desc: 2021-8
+  - caption: TITLE
+    src: https://z3.ax1x.com/2021/08/29/hG1vOP.png
+    desc: 2021-1
+  - caption: 狗
+    src: https://z3.ax1x.com/2021/08/29/hG3Sw8.png
+    desc: 2021-2
+  - caption: 照片临摹
+    src: https://z3.ax1x.com/2021/08/29/hG8tvn.png
+    desc: 2020-7
+  - caption: 作品集封面
+    src: https://z3.ax1x.com/2021/08/29/hGGfQs.png
+    desc: 2019-8
+  - caption: 网络
+    src: https://z3.ax1x.com/2021/08/29/hGGhyn.png
+    desc: 2019-5
+  - caption: 手绘
+    src: https://z3.ax1x.com/2021/08/29/hGYVCF.jpg
+    desc: 2018-11
 
 ---

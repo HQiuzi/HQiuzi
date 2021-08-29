@@ -59,12 +59,12 @@ trianglify:
   cellSize: 100
   width: 800
   height: 600
-  palette: '["Purples", "Blues"]'
+  palette: '["Blues"]'
   opacity: 0.7
 
 avatar:
   enable: true
-  url: https://z3.ax1x.com/2021/07/26/Wf95DA.jpg
+  url: https://z3.ax1x.com/2021/08/29/hGY55T.jpg
   rounded: true
   opacity: 1
   mickey_mouse: false
